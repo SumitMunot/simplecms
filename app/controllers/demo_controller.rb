@@ -1,7 +1,7 @@
 class DemoController < ApplicationController
 
   def index
-	redirect_to (:action=> 'hello')
+	#redirect_to (:action => 'hello')
   end
 
   def hello

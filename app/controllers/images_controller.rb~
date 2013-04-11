@@ -36,7 +36,8 @@ class ImagesController < ApplicationController
   # GET /images/1/edit
   def edit
     @image = Image.find(params[:id])
-    @subjectsid = Subject.all
+    @subjectsid = @image.imageable_id
+    @imagetype = @image.imageable_type
  
   end
 
