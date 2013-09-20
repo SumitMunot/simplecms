@@ -1,0 +1,42 @@
+class VideoList < ActiveRecord::Base
+  attr_accessible :video_tags_id, :videocats_id
+  belongs_to :video_tags
+  belongs_to :videocats
+
+  
+end
+
+
+class Videosub1cat < ActiveRecord::Base
+   attr_accessible  :category_id, :name
+  has_many :videosub2cats
+ belongs_to :videocats
+ end
+
+
+class VideoTag < ActiveRecord::Base
+  attr_accessible :name, :tags, :url
+validates_presence_of :name
+validates_presence_of :tags
+validates_presence_of :url
+  has_many :video_lists
+belongs_to :videocats
+  has_many :videocats, :through => :video_lists
+def self.search(search_string,search_string1,search_string2,search_string3,search_string4)
+	  search_condition = "%" + search_string + "%"
+	  search_condition1 = "%"+search_string1+"%"
+	  search_condition2 = "%"+search_string2+"%"
+          search_condition3 = "%"+search_string3+"%"
+          search_condition4 = "%"+search_string4+"%"
+  	  find(:all, :conditions => ['name LIKE ? OR tags LIKE ? OR name LIKE ? OR tags LIKE ?  OR name LIKE ? OR tags LIKE ?  OR name LIKE ? OR tags LIKE ? OR name LIKE ? OR tags LIKE ?', search_condition, search_condition, search_condition1, search_condition1, search_condition2, search_condition2, search_condition3, search_condition3, search_condition4, search_condition4],:group => 'id',:limit => 2)
+	end
+  
+end
+
+
+class Videocat < ActiveRecord::Base
+   attr_accessible  :name, :cat_id
+  has_many :videosub1cats
+  has_many :video_lists
+  has_many :video_tags, :through => :video_lists
+end
